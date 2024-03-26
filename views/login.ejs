@@ -1,0 +1,20 @@
+<%-include('components/header.ejs')%>
+<div class="container">
+  <div class="formcontent">
+    <h2 class="title">Login</h2>
+    <form class="registerForm"  method="post" action="/auth/login">
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Email address</label>
+        <input type="email" class="form-control" aria-describedby="emailHelp" name="email">
+      </div>
+      
+      <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Password</label>
+        <input type="password" class="form-control" name="password">
+      </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <p> if you don't have an account please <a href="/auth/register">register</a></p>
+    </form>
+  </div>
+</div>
+<%-include('components/footer.ejs')%>

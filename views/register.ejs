@@ -1,5 +1,7 @@
 <%-include('components/header.ejs')%>
 <div class="container">
+  <div class="formcontent">
+    <h2 class="title">Create An Account</h2>
     <form class="registerForm"  method="post" action="/auth/register">
 
         <div class="mb-3">
@@ -22,7 +24,14 @@
           <input type="password" class="form-control" name="password">
         </div>
       
-        <button type="submit" class="btn btn-primary">Submit</button>
+        
+          <button type="submit" class="btn btn-primary">Submit</button>
+          <p> if you have an account please <a href="/auth/login">login</a></p>
+                
       </form>
+  </div>
 </div>
+<script>
+  console.log('register page');
+</script>
 <%-include('components/footer.ejs')%>

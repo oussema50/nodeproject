@@ -1,3 +1,25 @@
+a{
+    text-decoration:none;
+}
+
+.formcontent
+{
+    width: 500px;
+    margin: 40px auto;
+    box-shadow: 3px 8px 17px rgba(0,0,0,0.1);
+}
+.formcontent .title{
+    text-align: center;
+    background-color: #8181e9;
+    color: white;
+    padding: 15px 0;
+}
+
 .registerForm
 {
+    padding:15px;
+}
+
+.registerForm p{
+    padding-top:5px;
 }
