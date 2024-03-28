@@ -1,0 +1,20 @@
+<%-include('components/header.ejs')%>
+<div class="container">
+  <div class="formcontent">
+    <h2 class="title">Update Salle</h2>
+    <form class="registerForm"  method="post" action="/salle/update/<%=salle._id%>">
+      <div class="mb-3">
+        <label  class="form-label">Salle number</label>
+        <input type="text" class="form-control" name="nom" value="<%=salle.nom%>">
+        <input type="hidden" name="salleId" value="<%= salle._id%>">
+      </div>
+      
+      <div class="mb-3">
+        <label  class="form-label">Capacity</label>
+        <input type="number" class="form-control" name="capacity" value="<%=salle.capacity%>">
+      </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>
+<%-include('components/footer.ejs')%>

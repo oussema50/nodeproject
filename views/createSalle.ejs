@@ -1,0 +1,19 @@
+<%-include('components/header.ejs')%>
+<div class="container">
+  <div class="formcontent">
+    <h2 class="title">Create A Salle</h2>
+    <form class="registerForm"  method="post" action="/salle/create">
+      <div class="mb-3">
+        <label  class="form-label">Salle number</label>
+        <input type="text" class="form-control" name="nom">
+      </div>
+      
+      <div class="mb-3">
+        <label  class="form-label">Capacity</label>
+        <input type="number" class="form-control" name="capacity">
+      </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>
+<%-include('components/footer.ejs')%>

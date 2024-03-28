@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const salleSchema = new mongoose.Schema({
-    nom:String,
+    nom:{type:String},
     capacity:Number,
 })
 

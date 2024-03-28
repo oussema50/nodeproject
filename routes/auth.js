@@ -3,7 +3,7 @@ const express = require('express');
 const userController = require('../controllers/userController');
 const router = express.Router();
 
-const {isAuth,notAuthLogin,notAuthRegister} = require('./gardAuth');
+const {isAuth} = require('./gardAuth');
 
 //Get The Register Page
 router.get('/register',userController.registerPage);

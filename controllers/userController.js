@@ -20,8 +20,12 @@ exports.registerPage = (req,res)=>{
 
 exports.registerUser = async (req,res)=>{
     try {
-        console.log(req.body); 
+        
         const {firstName,lastName,email,password}=req.body;
+        const userEmail = await User.findOne({email: email});
+        if(userEmail){
+            return res.status(404).send('email already exist!');
+        }
         const user = new User({firstName,lastName,email,password});
         await user.save();
         res.redirect('/auth/login')
@@ -40,7 +44,7 @@ exports.loginPage = (req,res)=>{
             res.render('login');
            
         } else {
-            res.render('reservation');
+            res.render('salles');
            
         }
       });
@@ -66,7 +70,7 @@ exports.loginUser = async (req,res)=>{
             httpOnly: true,
             secure: false, 
           });
-        res.redirect('/reservation');
+        res.redirect('/reserve');
     } catch (err) {
      res.status(400).render('login',{message:err.message})
     }

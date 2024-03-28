@@ -23,3 +23,49 @@ a{
 .registerForm p{
     padding-top:5px;
 }
+
+.salles a{
+    color:white;
+}
+
+/* roomDetails Page */
+
+.dayofweek{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.dayofweek h5{
+    width:160px;
+    text-align: center;
+}
+.hourofday{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    
+}
+.hourofdaycontent{
+    width: 160px;
+    padding:10px;
+    box-shadow: 4px 5px 15px rgba(0,0,0,0.3);
+}
+.hourofdaycontent button
+{
+    width: 100%;
+    border: none;
+    background-color: transparent;
+}
+.hourofdaycontent h6{
+    text-align: center;
+    background-color: rgb(76, 133, 231);
+    padding: 5px;
+    color: white;
+    cursor:pointer;
+    transition:all 0.8 ease-in-out;
+}
+
+.hourofdaycontent h6:hover{
+    background-color: rgb(33, 88, 184);
+}

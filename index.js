@@ -6,8 +6,9 @@ const cookieParser = require('cookie-parser');
 
 const userRouter = require('./routes/auth');
 const homeRouter = require('./routes/home');
-const reservationRouter = require('./routes/reservation');
+const reserveRouter = require('./routes/reserve');
 const {checkuser} = require('./middelware/authenticate');
+const salleRouter = require('./routes/salle');
 
 dotenv.config();
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -24,7 +25,8 @@ app.set('views','views');
 app.get('*',checkuser);
 app.use('/',homeRouter);
 app.use('/auth',userRouter);
-app.use('/reservation',reservationRouter)
+app.use('/salle',salleRouter);
+app.use('/reserve',reserveRouter);
 
 // connection to mongodb and start server 
 mongoose.connect(MONGODB_URI).then(()=>{

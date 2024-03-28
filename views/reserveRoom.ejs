@@ -1,0 +1,38 @@
+<%-include('components/header.ejs')%>
+
+
+
+<div class="container mt-5">
+ 
+
+    <div class="formcontent">
+        <h2 class="title">reserve Room </h2>
+        <form class="registerForm"  method="post" action="/reserve/room/<%= roomid %>">
+    
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">date</label>
+                <input type="date" class="form-control" name="date" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Start Time</label>
+                <input type="number" class="form-control" name="startTime" min="8" max="16">
+            </div>
+            
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">End Time</label>
+                <input type="number" class="form-control" name="endTime" min="9" max="17">
+            </div>
+            <input type="hidden" name="user" value="<%= user._id %>" />
+         
+            
+              <button type="submit" class="btn btn-primary">Submit</button>
+            
+                    
+          </form>
+      </div>
+
+
+</div>
+
+<%-include('components/footer.ejs')%>

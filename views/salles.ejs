@@ -1,0 +1,39 @@
+<%-include('components/header.ejs')%>
+
+
+
+<div class="container mt-5">
+ 
+    <button type="button"  class="btn btn-primary">
+      <a href="/salle/create" style="color:white">
+        Create Salle
+      </a>
+    </button>
+    <h2>salles</h2>
+
+  <table class="table salles">
+      <thead>
+          <tr>
+              <th scope="col">Nom</th>
+              <th scope="col">Capacity</th>
+              <th scope="col">Action</th>
+          </tr>
+      </thead>
+      <tbody>
+        <% for(salle of salles){%>
+          <tr>
+              <td><%= salle.nom %></td>
+              <td><%= salle.capacity%></td>
+              <td>
+                <button type="button" class="btn btn-primary"><a href="/salle/details/<%=salle.id%>">details</a></button>
+                <button type="button" class="btn btn-primary"><a href="/salle/update/<%=salle.id%>">Update</a></button>
+                  <button type="button" class="btn btn-danger"><a href="/salle/delete/<%=salle.id%>">Delete</a></button>
+              </td>
+          </tr>
+         <%}%>
+          <!-- Add more rows as needed -->
+      </tbody>
+  </table>
+</div>
+
+<%-include('components/footer.ejs')%>
