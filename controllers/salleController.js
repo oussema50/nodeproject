@@ -1,11 +1,11 @@
 const Salle = require('../models/salle');
-
+const Reservation = require('../models/reserve');
 exports.sallePage = async(req,res)=>{
     try{
         const salles = await Salle.find();
         res.render('salles',{salles:salles});
     }catch(err){
-        res.status(400).send(err)
+        console.log(err)
     }
 }
 
@@ -49,7 +49,23 @@ exports.updateSalle = async(req,res)=>{
 
 
     }catch(err){
-        res.status(403).send(err)
+        conosle.log(err);
+    }
+}
+
+exports.roomDetails = async(req,res)=>{
+    try{
+        const id = req.params.id;
+        const salle = await Salle.findById(req.params.id);
+        const detailsReservation = await Reservation.find({room:id});
+        console.log(detailsReservation);
+        res.render('roomDetails',{
+            salle:salle,
+            detailsReservation:detailsReservation
+        })
+
+    }catch(err){
+        console.log(err);
     }
 }
 
@@ -58,6 +74,19 @@ exports.deleteSalle = async(req,res)=>{
         const deleteSalle = await Salle.findByIdAndDelete({_id:req.params.id});
         res.redirect(`/salle`);
     }catch(err){
-        res.status(403).send(err)
+        console.log(err);
     }
 }
+
+exports.allReservations = async(req,res)=>{
+    try{
+        const reservations = await Reservation.find().populate('room', 'nom capacity');
+        res.render('allRoomReservations',{reservations:reservations});
+
+    }catch(err){
+        console.log(err);
+    }
+}
+
+
+

@@ -1,8 +1,12 @@
 const mongoose = require('mongoose');
 const reserveSchema = new mongoose.Schema({
-    date:Date,
-    startTime:Number,
-    endTime:Number,
+    day:Number,
+    month:Number,
+    year:Number,
+    startHour:Number,
+    startMinute:Number,
+    endHour:Number,
+    endMinute:Number,
     user:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'User',

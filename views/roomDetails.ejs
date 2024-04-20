@@ -3,78 +3,143 @@
 <div class="container mt-5">
     <h3>Number: <span style="color:rgb(78, 78, 78)"><%=salle.nom%></span></h3>
     <h3>Capacity: <span style="color:rgb(78, 78, 78)""><%=salle.capacity%></span></h3>
+    <button type="button" class="btn btn-primary"><a href="/reserve/room/<%=salle.id%>" style="color:white">reserve</a></button>
+
     <h3>reservation details:</h3>
-    <div class="dayofweek">
-        <h5>monday</h5>
-        <h5>tuesday</h5>
-        <h5>wednesday</h5>
-        <h5>thursday</h5>
-        <h5>friday</h5>
-    </div>
-    <div class="hourofday">
-        <div class="hourofdaycontent">
-            <button disabled>8am -> 9am</button>
-            <h6>9am -> 10am</h6>
-            <h6>10am -> 11am</h6>
-            <h6>11am -> 12pm</h6>
-            <h6>12pm -> 13pm</h6>
-            <h6>13pm -> 14pm</h6>
-            <h6>14pm -> 15pm</h6>
-            <h6>15pm -> 16pm</h6>
-            <h6>16pm -> 17pm</h6>
-            
+    <table class="table salles">
+        <thead>
+            <tr>
+              
+                <th scope="col">date</th>
+                <th scope="col">time start</th>
+                <th scope="col">time end</th>
+                <th scope="col">actions</th>
+
+            </tr>
+        </thead>
+        <tbody>
+          <% for(dr of detailsReservation){%>
+            <tr>
+                
+                <td><%= dr.day%>/<%= dr.month%>/<%= dr.year%></td>
+                <%if(dr.startMinute < 10){%>
+                    <td><%= dr.startHour%>:0<%= dr.startMinute%></td>
+                    <%}else{%>
+                      <td><%= dr.startHour%>:<%= dr.startMinute%></td>
+                    <%}%>
+                    <%if(dr.endMinute < 10){%>
+                      <td><%= dr.endHour%>:0<%= dr.endMinute%></td>
+                      <%}else{%>
+                        <td><%= dr.endHour%>:<%= dr.endMinute%></td>
+                      <%}%>
+
+                <td>
+                  <button type="button" class="btn btn-primary"><a href="/salle/details/<%=salle.id%>">details</a></button>
+
+                </td>
+            </tr>
+           <%}%>
+            <!-- Add more rows as needed -->
+        </tbody>
+    </table>
+    <div class="availabelRoom">
+      <div class="availabelRoomContent">
+        <h3>Available room time:</h3>
+        
+        <div class="hourofday" id="hourofday">
         </div>
-        <div class="hourofdaycontent">
-            <h6>8am -> 9am</h6>
-            <h6>9am -> 10am</h6>
-            <h6>10am -> 11am</h6>
-            <h6>11am -> 12pm</h6>
-            <h6>12pm -> 13pm</h6>
-            <h6>13pm -> 14pm</h6>
-            <h6>14pm -> 15pm</h6>
-            <h6>15pm -> 16pm</h6>
-            <h6>16pm -> 17pm</h6>
-            
-        </div>
-        <div class="hourofdaycontent">
-            <h6>8:00</h6>
-            <h6>9:00</h6>
-            <h6>10:00</h6>
-            <h6>11:00</h6>
-            <h6>12:00</h6>
-            <h6>13:00</h6>
-            <h6>14:00</h6>
-            <h6>15:00</h6>
-            <h6>16:00</h6>
-            <h6>17:00</h6>
-        </div>
-        <div class="hourofdaycontent">
-            <h6>8:00</h6>
-            <h6>9:00</h6>
-            <h6>10:00</h6>
-            <h6>11:00</h6>
-            <h6>12:00</h6>
-            <h6>13:00</h6>
-            <h6>14:00</h6>
-            <h6>15:00</h6>
-            <h6>16:00</h6>
-            <h6>17:00</h6>
-        </div>
-        <div class="hourofdaycontent">
-            <h6>8:00</h6>
-            <h6>9:00</h6>
-            <h6>10:00</h6>
-            <h6>11:00</h6>
-            <h6>12:00</h6>
-            <h6>13:00</h6>
-            <h6>14:00</h6>
-            <h6>15:00</h6>
-            <h6>16:00</h6>
-            <h6>17:00</h6>
-        </div>
+      </div>
     </div>
     
     
 </div>
 
 <%-include('components/footer.ejs')%>
+
+<script>
+  const date = new Date();
+  const currentDay = date.getDate();
+  const currentMonth = date.getMonth();
+  const currentYear = date.getFullYear();
+  const currentHour = date.getHours();
+  const currentMinute = date.getMinutes();
+  const hourofdayEle = document.querySelector('#hourofday');
+  console.log(currentDay);
+  console.log(currentMonth);
+  console.log(currentYear);
+  let reserveRoom = <%- JSON.stringify(detailsReservation) %>;
+  console.log(reserveRoom);
+  function getWeekdaysOfMonth(year, month) {
+      const weekdays = [];
+      const date = new Date(year, month, 1); // Create a Date object for the first day of the specified month
+
+      // Loop through each day of the month
+      while (date.getMonth() === month) {
+          const dayOfWeek = date.getDay();
+          if (dayOfWeek !== 0 && dayOfWeek !== 6) { // Exclude Sunday (0) and Saturday (6)
+            weekdays.push({
+              date: date.getDate(), // Get the day of the month
+              day: dayOfWeek // Get the day of the week (0 for Sunday, 1 for Monday, ..., 6 for Saturday)
+            });
+          }
+        
+          date.setDate(date.getDate() + 1); // Move to the next day
+      }
+
+      return weekdays;
+  }
+
+for(let i = 0; i < 12; i++){
+      if(i == currentMonth){
+        const weekdaysOfMonth = getWeekdaysOfMonth(currentYear, i);
+        weekdaysOfMonth.forEach(day=>{
+
+          if(day.date >= currentDay){
+            const h5 = document.createElement('h5');
+            const dayofweekEle = document.createElement('div')
+            const hourofdaycontent = document.createElement('div')
+            const daycontent = document.createElement('div')
+            dayofweekEle.classList.add('dayofweek');
+            hourofdaycontent.classList.add('hourofdaycontent');
+            daycontent.classList.add('daycontent');
+            h5.textContent = `${day.date}/${currentMonth}/${currentYear}`;
+            dayofweekEle.appendChild(h5)
+            for (let hour = 8; hour < 17; hour++) {
+              let findHour = reserveRoom.map(item => {
+                if(item.startHour == hour && item.day ==day.date){
+                  return item
+                }
+              });
+              // console.log()
+              if(findHour[0]){
+                console.log('hello range ==>',hour)
+
+                  if(findHour[0].startHour == hour){
+                    hour = findHour[0].endHour;
+                    console.log('hello range ==>',hour)
+                    continue;
+                  }
+                
+              }
+              const h6 = document.createElement('h6');
+                h6.textContent = ` ${hour}->${hour + 1}`;
+                hourofdaycontent.appendChild(h6);
+              // if(!findHour){
+              //  tdElement.textContent =`${hour}->${hour + 1}`;
+              //  tr.appendChild(tdElement)
+                
+              // }
+            }
+            daycontent.appendChild(dayofweekEle)
+            daycontent.appendChild(hourofdaycontent)
+            hourofdayEle.appendChild(daycontent)
+          }
+          
+
+        });
+        
+        break;
+      }
+}
+
+</script>

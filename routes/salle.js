@@ -16,6 +16,10 @@ router.get('/update/:id',authenticate,salleController.salleUpdatePage);
 router.post('/update/:id',authenticate,salleController.updateSalle);
 //Delete Salle
 router.get('/delete/:id',authenticate,salleController.deleteSalle);
+//room details
+router.get('/details/:id',authenticate,salleController.roomDetails);
+//all room reservation
+router.get('/allreservations',authenticate,salleController.allReservations);
 
 
 

@@ -1,5 +1,7 @@
 <%-include('components/header.ejs')%>
+
 <div class="container">
+  
   <div class="formcontent">
     <h2 class="title">Create An Account</h2>
     <form class="registerForm"  method="post" action="/auth/register">
@@ -23,7 +25,11 @@
           <label for="exampleInputPassword1" class="form-label">Password</label>
           <input type="password" class="form-control" name="password">
         </div>
-      
+          <%if(message){%>
+            <div class="alert alert-danger" role="alert">
+              <%=message%>
+            </div>
+          <%}%>
         
           <button type="submit" class="btn btn-primary">Submit</button>
           <p> if you have an account please <a href="/auth/login">login</a></p>

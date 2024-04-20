@@ -1,0 +1,6 @@
+db.reservations.find()
+db.salles.find()
+db.users.find()
+show collections
+use nodeproject
+show dbs

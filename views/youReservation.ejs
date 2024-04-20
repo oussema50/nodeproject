@@ -4,8 +4,14 @@
 
 <div class="container mt-5">
  
-
+  <%if(message){%>
+    <div class="alert alert-danger" role="alert">
+      <%=message%>
+    </div>
+  <%}%>
     <h2>your reservation room</h2>
+    <button type="button" class="btn btn-danger"><a href="/reserve/deleteall" style="color:white;">delete all</a></button>
+
 
   <table class="table salles">
       <thead>
@@ -19,19 +25,42 @@
           </tr>
       </thead>
       <tbody>
-        <!-- <% for(salle of salles){%>
+        <% for(reserve of reservations){%>
           <tr>
-              <td><%= salle.nom %></td>
-              <td><%= salle.capacity%></td>
+              <td><%= reserve.room.nom %></td>
+              <td><%= reserve.room.capacity%></td>
+              <td class="date"><%= reserve.year%>/<%= reserve.month%>/<%= reserve.day%></td>
+              <%if(reserve.startMinute < 10){%>
+              <td><%= reserve.startHour%>:0<%= reserve.startMinute%></td>
+              <%}else{%>
+                <td><%= reserve.startHour%>:<%= reserve.startMinute%></td>
+              <%}%>
+              <%if(reserve.endMinute < 10){%>
+                <td><%= reserve.endHour%>:0<%= reserve.endMinute%></td>
+                <%}else{%>
+                  <td><%= reserve.endHour%>:<%= reserve.endMinute%></td>
+                <%}%>
               <td>
-                <button type="button" class="btn btn-primary"><a href="/reserve/room/<%=salle.id%>">reserve</a></button>
-
+                <button type="button" class="btn btn-primary"><a href="/reserve/update?reserveid=<%=reserve._id%>&userid=<%=reserve.user%>">update</a></button>
+                <button type="button" class="btn btn-danger"><a href="/reserve/delete?reserveid=<%=reserve._id%>&userid=<%=reserve.user%>">delete</a></button>
               </td>
           </tr>
-         <%}%> -->
-          <!-- Add more rows as needed -->
+         <%}%>
       </tbody>
   </table>
 </div>
+<script>
+  const curentDate = new Date();
+  const reservedDate = document.querySelectorAll(".date")
 
+  console.log(curentDate)
+  reservedDate.forEach(ele => {
+    const date = new Date(ele.textContent);
+    const getUpdateBtn = ele.parentElement.lastElementChild.firstElementChild;
+    console.log(getUpdateBtn)
+    if(date < curentDate){
+      getUpdateBtn.disabled = true;
+    }
+  });
+</script>
 <%-include('components/footer.ejs')%>

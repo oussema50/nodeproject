@@ -1,0 +1,52 @@
+<%-include('components/header.ejs')%>
+
+<div class="container mt-5">
+    <h3>Number: <span style="color:rgb(78, 78, 78)"><%=salle.nom%></span></h3>
+    <h3>Capacity: <span style="color:rgb(78, 78, 78)""><%=salle.capacity%></span></h3>
+    <button type="button" class="btn btn-primary"><a href="/reserve/room/<%=salle.id%>" style="color:white;" >reserve</a></button>
+
+    <h3>reservation details:</h3>
+    <table class="table salles">
+        <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">Capacity</th>
+                <th scope="col">date</th>
+                <th scope="col"> start time</th>
+                <th scope="col">end time</th>
+                <th scope="col">actions</th>
+
+            </tr>
+        </thead>
+        <tbody>
+          <% for(res of reservations){%>
+            <tr>
+                
+                <td><%= res.room.nom%></td>
+                <td><%= res.room.capacity%></td>
+                <td><%= res.day%>/<%= res.month%>/<%= res.year%></td>
+                <%if(res.startMinute < 10){%>
+                    <td><%= res.startHour%>:0<%= res.startMinute%></td>
+                    <%}else{%>
+                      <td><%= res.startHour%>:<%= res.startMinute%></td>
+                    <%}%>
+                    <%if(res.endMinute < 10){%>
+                      <td><%= res.endHour%>:0<%= res.endMinute%></td>
+                      <%}else{%>
+                        <td><%= res.endHour%>:<%= res.endMinute%></td>
+                      <%}%>
+
+                <td>
+                  <button type="button" class="btn btn-primary"><a href="/salle/details/<%=res.room._id%>">details</a></button>
+
+                </td>
+            </tr>
+           <%}%>
+            <!-- Add more rows as needed -->
+        </tbody>
+    </table>
+    
+</div>
+
+<%-include('components/footer.ejs')%>
+

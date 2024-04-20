@@ -3,10 +3,14 @@
 
 
 <div class="container mt-5">
- 
+  <% if (successmsg) { %>
+    <div class="alert alert-success" role="alert">
+        <%=successmsg%>
+      </div>
+  <% } %>
 
     <h2>All meeting rooms</h2>
-
+    <p>details about all reservation <button type="button" class="btn btn-primary"><a href="/salle/allreservations" style="color: white;">all Reservations</a></button></p>
   <table class="table salles">
       <thead>
           <tr>
@@ -21,7 +25,7 @@
               <td><%= salle.nom %></td>
               <td><%= salle.capacity%></td>
               <td>
-                <button type="button" class="btn btn-primary"><a href="/reserve/room/<%=salle.id%>">reserve</a></button>
+                <button type="button" class="btn btn-primary"><a href="/salle/details/<%=salle.id%>">details</a></button>
 
               </td>
           </tr>

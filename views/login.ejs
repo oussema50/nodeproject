@@ -1,5 +1,10 @@
 <%-include('components/header.ejs')%>
 <div class="container">
+  <%if(message){%>
+    <div class="alert alert-success" role="alert">
+      <%=message%>
+    </div>
+  <%}%>
   <div class="formcontent">
     <h2 class="title">Login</h2>
     <form class="registerForm"  method="post" action="/auth/login">

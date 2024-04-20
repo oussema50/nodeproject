@@ -6,7 +6,7 @@ exports.registerPage = (req,res)=>{
     if(token){
       jwt.verify(token, process.env.JWT_SECRET, async(err, decodedToken) => {
         if (err) {
-            res.render('register');
+            res.render('register',{message:req.flash('message')[0]});
            
         } else {
             res.render('reservation');
@@ -14,7 +14,8 @@ exports.registerPage = (req,res)=>{
         }
       });
     }else{
-        res.render('register');
+
+        res.render('register',{message:req.flash('message')[0]});
     }
 }
 
@@ -22,15 +23,25 @@ exports.registerUser = async (req,res)=>{
     try {
         
         const {firstName,lastName,email,password}=req.body;
+        if(firstName.length == 0 || lastName.length == 0 || email.length == 0 || password.length == 0 ){
+            req.flash('message','need all the input ');
+            res.redirect('/auth/register');
+
+        }
         const userEmail = await User.findOne({email: email});
         if(userEmail){
-            return res.status(404).send('email already exist!');
+            req.flash('message','email already exist!');
+            res.redirect('/auth/register');
+
         }
         const user = new User({firstName,lastName,email,password});
         await user.save();
+        req.flash('message','User added successfully!')
         res.redirect('/auth/login')
-    } catch (error) {
-        res.status(400).send(error.message)
+    } catch (err) {
+        // res.status(400).send(err.message)
+        console.log(err);
+        res.render('register',{message:req.flash('message')[0]});
     }
 }
 
@@ -41,7 +52,7 @@ exports.loginPage = (req,res)=>{
     if(token){
       jwt.verify(token, process.env.JWT_SECRET, async(err, decodedToken) => {
         if (err) {
-            res.render('login');
+            res.render('login',{message:req.flash('message')[0]});
            
         } else {
             res.render('salles');
@@ -49,7 +60,7 @@ exports.loginPage = (req,res)=>{
         }
       });
     }else{
-        res.render('login');
+        res.render('login',{message:req.flash('message')[0]});
     }
 }
 
@@ -58,11 +69,14 @@ exports.loginUser = async (req,res)=>{
         const {email,password}=req.body;
         const user = await User.findOne({email: email});
         if(!user){
-            return res.status(404).send('user not found')
+            req.flash('message','wrong credential')
+            res.redirect('/auth/login')
+            
         }
         const isPasswordMatch =await bcrypt.compare(password,user.password);
        if(!isPasswordMatch){
-            return res.status(401).send('invalid password')
+            req.flash('message','wrong credential')
+            res.redirect('/auth/login')
         }
         const token = jwt.sign({_id:user._id},process.env.JWT_SECRET);
         res.cookie('jwtToken', token, {
@@ -72,7 +86,8 @@ exports.loginUser = async (req,res)=>{
           });
         res.redirect('/reserve');
     } catch (err) {
-     res.status(400).render('login',{message:err.message})
+        console.log(err);
+        res.render('login',{message:req.flash('message')[0]});
     }
 }
 
