@@ -77,6 +77,7 @@ exports.loginUser = async (req,res)=>{
        if(!isPasswordMatch){
             req.flash('message','wrong credential')
             res.redirect('/auth/login')
+            console.log(user)
         }
         const token = jwt.sign({_id:user._id},process.env.JWT_SECRET);
         res.cookie('jwtToken', token, {
@@ -85,6 +86,8 @@ exports.loginUser = async (req,res)=>{
             secure: false, 
           });
         res.redirect('/reserve');
+        console.log(user);
+
     } catch (err) {
         console.log(err);
         res.render('login',{message:req.flash('message')[0]});

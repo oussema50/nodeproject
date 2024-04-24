@@ -27,7 +27,7 @@ app.set('views','views');
 app.use(express.static(path.join(__dirname,'assets')));
 app.use(session({
     secret:process.env.JWT_SECRET,
-    cookie:{maxAge:60000},
+    cookie:{maxAge:6000},
     saveUninitialized: false,
     resave: false,
 }));
